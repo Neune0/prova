@@ -1,0 +1,57 @@
+<div class="container">
+    <h2>Elenco Piatti</h2>
+    
+    <!-- Mostra messaggio di caricamento -->
+    <div *ngIf="loading" class="loading">
+      <p>Caricamento in corso...</p>
+      <div class="spinner"></div>
+    </div>
+    
+    <!-- Mostra messaggio di errore -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+      <button (click)="caricaPiatti()" class="btn btn-sm btn-outline-primary ms-2">Riprova</button>
+    </div>
+  
+    <!-- Mostra lista piatti -->
+    <div *ngIf="!loading && !error && piatti.length > 0" class="piatti-list">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrizione</th>
+            <th>Prezzo</th>
+            <th>Categoria</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let piatto of piatti">
+              <td>{{ piatto.id }}</td>
+              <td>{{ piatto.nome }}</td>
+              <td>{{ piatto.descrizione }}</td>
+              <td>{{ piatto.prezzo | currency:'EUR' }}</td>
+              <td>{{ piatto.categoria }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="eliminaPiatto(piatto.id)" title="Elimina piatto">
+                  <span>✕</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+  
+    <!-- Messaggio se non ci sono piatti -->
+    <div *ngIf="!loading && !error && piatti.length === 0" class="no-data">
+      <p>Nessun piatto disponibile.</p>
+    </div>
+  
+    <!-- Pulsante per ricaricare i dati -->
+    <div class="actions">
+      <button (click)="caricaPiatti()" class="btn btn-primary">
+        Aggiorna elenco
+      </button>
+    </div>
+  </div>
